@@ -3,7 +3,8 @@ package com.techforb.challenge.service;
 import com.techforb.challenge.dto.TransactionDTO;
 import com.techforb.challenge.entity.Transaction;
 import com.techforb.challenge.entity.Transfer;
-import com.techforb.challenge.enums.TransactionState;
+import com.techforb.challenge.enums.MovementType;
+import com.techforb.challenge.enums.TransactionStatus;
 import com.techforb.challenge.enums.TransactionType;
 import com.techforb.challenge.exception.GenericException;
 import com.techforb.challenge.exception.NotAvailableBalance;
@@ -46,7 +47,7 @@ public class ImpTransactionService implements ITransactionService {
 
             Transaction transaction = Transaction.builder()
                     .type(TransactionType.DEPOSIT)
-                    .state(TransactionState.COMPLETED)
+                    .status(TransactionStatus.COMPLETED)
                     .date(LocalDateTime.now())
                     .amount(amount)
                     .user(user)
@@ -72,7 +73,7 @@ public class ImpTransactionService implements ITransactionService {
 
                 Transaction transaction = Transaction.builder()
                         .type(TransactionType.WITHDRAW)
-                        .state(TransactionState.COMPLETED)
+                        .status(TransactionStatus.COMPLETED)
                         .date(LocalDateTime.now())
                         .amount(amount)
                         .user(user)
@@ -107,10 +108,9 @@ public class ImpTransactionService implements ITransactionService {
                 Transfer transfer = new Transfer();
                 transfer.setAmount(amount);
                 transfer.setDate(LocalDateTime.now());
-                transfer.setState(TransactionState.PENDING);
+                transfer.setStatus(TransactionStatus.PENDING);
                 transfer.setUserDestinatary(auxDestinatary);
                 transfer.setUser(auxSender);
-                transfer.setUserSender(auxSender);
                 transfer.setType(TransactionType.TRANSFER);
                 transactionRepository.save(transfer);
 
@@ -130,27 +130,29 @@ public class ImpTransactionService implements ITransactionService {
                 throw new GenericException("Transaction is not a transfer.", HttpStatus.NOT_FOUND);
             }
 
-            if(transaction.getState() == TransactionState.COMPLETED) {
+            if(transaction.getStatus() == TransactionStatus.COMPLETED) {
                 throw new GenericException("Transaction can not be cancel.", HttpStatus.FORBIDDEN);
             }
 
-            if(transaction.getState() == TransactionState.CANCELED) {
+            if(transaction.getStatus() == TransactionStatus.CANCELED) {
                 throw new GenericException("Transaction is already canceled.", HttpStatus.FORBIDDEN);
             }
 
             /// update transfer
             Transfer transfer = (Transfer) transaction;
-            transfer.setState(TransactionState.CANCELED);
+            transfer.setStatus(TransactionStatus.CANCELED);
             transactionRepository.save(transfer);
 
             /// update user balance
-            User userSender = transfer.getUserSender();
+            User userSender = transfer.getUser();
             BigDecimal amount = transfer.getAmount();
             userSender.setBalance(userSender.getBalance().add(amount));
             userRepository.save(userSender);
         }
     }
 
+    @Override
+    @Transactional
     public void completeTransfer(Long transactionId) {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
         if(optionalTransaction.isEmpty()) {
@@ -161,17 +163,17 @@ public class ImpTransactionService implements ITransactionService {
                 throw new GenericException("Transaction is not a transfer.", HttpStatus.NOT_FOUND);
             }
 
-            if(transaction.getState() == TransactionState.CANCELED) {
+            if(transaction.getStatus() == TransactionStatus.CANCELED) {
                 throw new GenericException("Transaction is canceled.", HttpStatus.FORBIDDEN);
             }
 
-            if(transaction.getState() == TransactionState.COMPLETED) {
+            if(transaction.getStatus() == TransactionStatus.COMPLETED) {
                 throw new GenericException("Transaction is already completed.", HttpStatus.FORBIDDEN);
             }
 
             /// update transfer
             Transfer transfer = (Transfer) transaction;
-            transfer.setState(TransactionState.COMPLETED);
+            transfer.setStatus(TransactionStatus.COMPLETED);
             transactionRepository.save(transfer);
 
             /// update user balance
@@ -192,11 +194,33 @@ public class ImpTransactionService implements ITransactionService {
         User user = userOptional.get();
         List<Transaction> transactionList = transactionRepository.findAllByUser(user);
         List<TransactionDTO> transactionDTOList = new ArrayList<>();
+
         for(Transaction item : transactionList) {
             TransactionDTO aux = modelMapper.map(item, TransactionDTO.class);
+
+            /// In case of transfer
             if(aux.getTransactionType() == TransactionType.TRANSFER) {
-                /// transfer logic
+                Long id = user.getId();
+                Transfer transfer = (Transfer) item;
+                /// if the user is the sender
+                if(id.equals(transfer.getUser().getId())) {
+                    String fullName = transfer.getUserDestinatary().getFirstname() +
+                            " " +
+                            transfer.getUserDestinatary().getLastname();
+
+                    aux.setHeader(fullName);
+                    aux.setMovementType(MovementType.EXPENSE);
+                    /// if the user is the destinatary
+                } else if(id.equals(transfer.getUserDestinatary().getId())) {
+                    String fullName = transfer.getUser().getFirstname() +
+                            " " +
+                            transfer.getUser().getLastname();
+
+                    aux.setHeader(fullName);
+                    aux.setMovementType(MovementType.INCOME);
+                }
             }
+
             transactionDTOList.add(aux);
         }
         return transactionDTOList;

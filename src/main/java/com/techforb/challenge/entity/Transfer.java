@@ -9,14 +9,10 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@DiscriminatorValue("transfer")
+@DiscriminatorValue("Transfer")
 public class Transfer extends Transaction {
-
     @ManyToOne
     @JoinColumn(name = "user_id_destinatary")
     private User userDestinatary;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id_sender")
-    private User userSender;
 }

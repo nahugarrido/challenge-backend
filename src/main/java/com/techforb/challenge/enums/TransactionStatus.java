@@ -1,5 +1,5 @@
 package com.techforb.challenge.enums;
 
-public enum TransactionState {
+public enum TransactionStatus {
     COMPLETED, CANCELED, PENDING;
 }

@@ -1,6 +1,6 @@
 package com.techforb.challenge.entity;
 
-import com.techforb.challenge.enums.TransactionState;
+import com.techforb.challenge.enums.TransactionStatus;
 import com.techforb.challenge.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,9 +28,9 @@ public class Transaction {
     @Column(name = "date")
     private LocalDateTime date;
 
-    @Column(name = "state")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private TransactionState state;
+    private TransactionStatus status;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)

@@ -10,19 +10,13 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
-public class ImpUserService implements IUserService{
+public class ImpBalanceService implements IBalanceService {
 
     private final UserRepository userRepository;
 
-    private final ITransactionService iTransactionDetailService;
-
-
-
-    public ImpUserService(UserRepository userRepository, ITransactionService iTransactionDetailService) {
+    public ImpBalanceService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.iTransactionDetailService = iTransactionDetailService;
     }
-
 
     @Override
     public BigDecimal getBalance(Long id) {
