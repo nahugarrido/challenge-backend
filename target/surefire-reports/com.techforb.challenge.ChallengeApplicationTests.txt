@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.techforb.challenge.ChallengeApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.355 s - in com.techforb.challenge.ChallengeApplicationTests
