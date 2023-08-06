@@ -2,6 +2,7 @@ package com.techforb.challenge.controller;
 
 import com.techforb.challenge.service.ITransactionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,14 @@ public class AdminController {
         this.iTransactionDetailService = iTransactionDetailService;
     }
 
-
+    ///@PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/cancel/{transferId}")
     public ResponseEntity<String> cancelTransfer(@PathVariable Long transferId) {
         iTransactionDetailService.cancelTransfer(transferId);
         return ResponseEntity.ok().body("Successful operation");
     }
 
+    ///@PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/complete/{transferId}")
     public ResponseEntity<String> completeTransfer(@PathVariable Long transferId) {
         iTransactionDetailService.completeTransfer(transferId);
