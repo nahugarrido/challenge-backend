@@ -225,4 +225,17 @@ public class ImpTransactionService implements ITransactionService {
         }
         return transactionDTOList;
     }
+
+    @Override
+    public List<TransactionDTO> findAllTransactions() {
+        List<Transaction> transactionList = transactionRepository.findAll();
+
+        List<TransactionDTO> transactionDTOList = new ArrayList<>();
+        for(Transaction item : transactionList) {
+            TransactionDTO aux = modelMapper.map(item, TransactionDTO.class);
+            transactionDTOList.add(aux);
+        }
+
+        return transactionDTOList;
+    }
 }

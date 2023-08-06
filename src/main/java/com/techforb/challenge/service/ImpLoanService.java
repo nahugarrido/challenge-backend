@@ -153,6 +153,20 @@ public class ImpLoanService implements ILoanService {
         }
     }
 
+    @Override
+    public List<InstallmentDTO> findAllInstallments() {
+        List<Installment> installments = installmentRepository.findAll();
+
+        List<InstallmentDTO> installmentDTOS = new ArrayList<>();
+
+        for(Installment item : installments) {
+            InstallmentDTO aux = modelMapper.map(item, InstallmentDTO.class);
+            installmentDTOS.add(aux);
+        }
+
+        return installmentDTOS;
+    }
+
     private void generateLoanInstallments(Long id) {
         Optional<Loan> loanOptional = loanRepository.findById(id);
         if(loanOptional.isEmpty()) {

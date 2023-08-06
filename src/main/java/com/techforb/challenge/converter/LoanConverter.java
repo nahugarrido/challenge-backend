@@ -21,7 +21,7 @@ public class LoanConverter extends AbstractConverter<Installment, InstallmentDTO
         target.setTotalAmount(loan.getAmount());
         int installmentNumber = source.getNumber();
         int totalInstallments = loan.getTotalInstallments();
-        target.setNumber("Cuota " + installmentNumber + " de " + totalInstallments);
+        target.setNumber("Installment " + installmentNumber + " of " + totalInstallments);
 
         return target;
     }

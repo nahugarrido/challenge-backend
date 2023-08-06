@@ -17,4 +17,6 @@ public interface ITransactionService {
     void completeTransfer(Long transactionId);
 
     List<TransactionDTO> findAllTransferByUserID(String userID);
+
+    List<TransactionDTO> findAllTransactions();
 }

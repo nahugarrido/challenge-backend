@@ -12,4 +12,6 @@ public interface ILoanService {
     void payInstallment(Long userId, Long installmentId);
 
     List<InstallmentDTO> findAllInstallmentById(Long userId);
+
+    List<InstallmentDTO> findAllInstallments();
 }

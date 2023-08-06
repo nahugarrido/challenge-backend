@@ -11,4 +11,6 @@ public interface ICardService {
     List<CardDTO> findAllCardsByUserID(String userID);
 
     CardDTO findDebitCardByUserID(String userID);
+
+    List<CardDTO> findAllCards();
 }

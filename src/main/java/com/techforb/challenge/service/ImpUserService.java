@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +44,20 @@ public class ImpUserService implements IUserService {
         }
         User user = userOptional.get();
         return modelMapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public List<UserDTO> findAllUsers() {
+        List<User> userList = userRepository.findAll();
+
+        List<UserDTO> userDTOS = new ArrayList<>();
+
+        for(User item : userList) {
+            UserDTO aux = modelMapper.map(item, UserDTO.class);
+            userDTOS.add(aux);
+        }
+
+        return userDTOS;
     }
 
 }

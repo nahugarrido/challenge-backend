@@ -102,6 +102,20 @@ public class ImpCardService implements ICardService{
         throw new GenericException("User dont have a valid debit card.", HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public List<CardDTO> findAllCards() {
+        List<Card> cardList = cardRepository.findAll();
+
+        List<CardDTO> cardDTOList = new ArrayList<>();
+
+        for(Card item : cardList) {
+            CardDTO aux = modelMapper.map(item, CardDTO.class);
+            cardDTOList.add(aux);
+        }
+
+        return cardDTOList;
+    }
+
     private String generateRandomCardNumber() {
         StringBuilder cardNumber = new StringBuilder();
         Random random = new Random();

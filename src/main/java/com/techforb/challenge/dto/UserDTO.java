@@ -3,6 +3,8 @@ package com.techforb.challenge.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class UserDTO {
@@ -17,4 +19,6 @@ public class UserDTO {
     private String picture;
 
     private String email;
+
+    private BigDecimal balance;
 }
