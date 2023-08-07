@@ -53,6 +53,9 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    private List<Card> cards;
+
+    @OneToMany(mappedBy = "user")
     private List<Transaction> transactions;
 
     @OneToMany(mappedBy = "user")

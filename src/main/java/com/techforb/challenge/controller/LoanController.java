@@ -3,12 +3,14 @@ package com.techforb.challenge.controller;
 import com.techforb.challenge.dto.InstallmentDTO;
 import com.techforb.challenge.dto.LoanSaveDTO;
 import com.techforb.challenge.service.ILoanService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api/v1/loans")
 public class LoanController {
     private final ILoanService iLoanService;
