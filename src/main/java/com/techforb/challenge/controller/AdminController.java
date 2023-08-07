@@ -8,12 +8,14 @@ import com.techforb.challenge.service.ICardService;
 import com.techforb.challenge.service.ILoanService;
 import com.techforb.challenge.service.ITransactionService;
 import com.techforb.challenge.service.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api/v1/admin")
 public class AdminController {
     private final ITransactionService iTransactionService;
