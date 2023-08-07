@@ -27,11 +27,13 @@ public class SecurityConfiguration {
                                         "/doc/swagger-ui/**",
                                         "/swagger-ui.html",
                                         "/v3/api-docs/**",
-                                        "/v3/api-docs.yaml")
+                                        "/v3/api-docs.yaml",
+                                        "/api/v1/user/**",
+                                        "/api/v1/transactions/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
-                );
+                ); /// Agrego a permit all user y transactions por problema de cors en front
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
