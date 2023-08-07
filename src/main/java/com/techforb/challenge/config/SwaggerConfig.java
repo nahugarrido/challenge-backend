@@ -24,8 +24,6 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().servers(List.of(new Server().url("https://challenge-backend-production.up.railway.app/"),
-                        new Server().url("http://challenge-backend-production.up.railway.app/"),
-                        new Server().url("https://localhost:8080"),
                         new Server().url("http://localhost:8080")
                 ))
                 .info(new Info().title("Spring Boot 3 API - Credit App Challenge")
