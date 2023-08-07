@@ -26,7 +26,7 @@ public class AuthenticationService {
                 .lastname(request.getLastName())
                 .userID(request.getUserID())
                 .email(request.getEmail())
-                .picture(request.getPicture())
+                .picture("https://media.licdn.com/dms/image/D4D03AQFFcabjKm-eUw/profile-displayphoto-shrink_800_800/0/1690233724841?e=1695859200&v=beta&t=XTP4kFWWTNUM8mUHgWzmj9O_I0a-2gr5VOmDoXKOjeM")
                 .balance(BigDecimal.valueOf(0))
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
