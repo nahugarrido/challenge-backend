@@ -26,8 +26,8 @@ public class SwaggerConfig {
         return new OpenAPI().servers(List.of(new Server().url("https://challenge-backend-production.up.railway.app/"),
                         new Server().url("http://challenge-backend-production.up.railway.app/"),
                         new Server().url("https://localhost:8080"),
-        new Server().url("http://localhost:8080")
-        ))
+                        new Server().url("http://localhost:8080")
+                ))
                 .info(new Info().title("Spring Boot 3 API - Credit App Challenge")
                         .version("0.11")
                         .description("")
@@ -35,4 +35,3 @@ public class SwaggerConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")));
     }
 }
-
