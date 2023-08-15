@@ -22,7 +22,7 @@ public class PaymentConverter extends AbstractConverter<Payment, TransactionDTO>
 
         int installmentNumber = source.getInstallment().getNumber();
         int totalInstallments = source.getInstallment().getLoan().getTotalInstallments();
-        target.setHeader("Cuota " + installmentNumber + " de " + totalInstallments);
+        target.setHeader("Installment " + installmentNumber + " of " + totalInstallments);
 
         return target;
     }

@@ -1,9 +1,6 @@
 package com.techforb.challenge.controller;
 
-import com.techforb.challenge.dto.CardDTO;
-import com.techforb.challenge.dto.InstallmentDTO;
-import com.techforb.challenge.dto.TransactionDTO;
-import com.techforb.challenge.dto.UserDTO;
+import com.techforb.challenge.dto.*;
 import com.techforb.challenge.service.ICardService;
 import com.techforb.challenge.service.ILoanService;
 import com.techforb.challenge.service.ITransactionService;
@@ -33,16 +30,18 @@ public class AdminController {
 
     ///@PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/cancel/{transferId}")
-    public ResponseEntity<String> cancelTransfer(@PathVariable Long transferId) {
+    public ResponseEntity<ApiResponse> cancelTransfer(@PathVariable Long transferId) {
         iTransactionService.cancelTransfer(transferId);
-        return ResponseEntity.ok().body("Successful operation");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     ///@PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/complete/{transferId}")
-    public ResponseEntity<String> completeTransfer(@PathVariable Long transferId) {
+    public ResponseEntity<ApiResponse> completeTransfer(@PathVariable Long transferId) {
         iTransactionService.completeTransfer(transferId);
-        return ResponseEntity.ok().body("Successful operation");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     ///@PreAuthorize("hasRole('ADMIN')")
