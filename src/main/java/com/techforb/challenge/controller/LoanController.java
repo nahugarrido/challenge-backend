@@ -1,5 +1,6 @@
 package com.techforb.challenge.controller;
 
+import com.techforb.challenge.dto.ApiResponse;
 import com.techforb.challenge.dto.InstallmentDTO;
 import com.techforb.challenge.dto.LoanSaveDTO;
 import com.techforb.challenge.service.ILoanService;
@@ -19,15 +20,17 @@ public class LoanController {
         this.iLoanService = iLoanService;
     }
     @PostMapping(value = "/generate")
-    public ResponseEntity<String> generateLoan(@RequestBody LoanSaveDTO loanSaveDTO) {
+    public ResponseEntity<ApiResponse> generateLoan(@RequestBody LoanSaveDTO loanSaveDTO) {
         iLoanService.generateLoan(loanSaveDTO);
-        return ResponseEntity.ok().body("Successful operation.");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping(value = "/{userId}/pay/{installmentId}")
-    public ResponseEntity<String> payInstallment(@PathVariable Long userId, @PathVariable Long installmentId) {
+    public ResponseEntity<ApiResponse> payInstallment(@PathVariable Long userId, @PathVariable Long installmentId) {
         iLoanService.payInstallment(userId, installmentId);
-        return ResponseEntity.ok().body("Successful operation.");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/{userId}")

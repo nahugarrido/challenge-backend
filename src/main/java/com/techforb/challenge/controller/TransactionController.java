@@ -1,5 +1,6 @@
 package com.techforb.challenge.controller;
 
+import com.techforb.challenge.dto.ApiResponse;
 import com.techforb.challenge.dto.TransactionDTO;
 import com.techforb.challenge.dto.TransferSaveDTO;
 import com.techforb.challenge.service.ITransactionService;
@@ -22,21 +23,24 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/deposit/{userID}")
-    public ResponseEntity<String> deposit(@RequestBody BigDecimal amount, @PathVariable String userID) {
+    public ResponseEntity<ApiResponse> deposit(@RequestBody BigDecimal amount, @PathVariable String userID) {
         iTransactionService.deposit(amount, userID);
-        return ResponseEntity.ok().body("Successful operation.");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping(value = "/withdraw/{userID}")
-    public ResponseEntity<String> withdraw(@RequestBody BigDecimal amount, @PathVariable String userID) {
+    public ResponseEntity<ApiResponse> withdraw(@RequestBody BigDecimal amount, @PathVariable String userID) {
         iTransactionService.withdraw(amount, userID);
-        return ResponseEntity.ok().body("Successful operation.");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping(value = "/transfer")
-    public ResponseEntity<String> transfer(@RequestBody TransferSaveDTO transferSaveDTO) {
+    public ResponseEntity<ApiResponse> transfer(@RequestBody TransferSaveDTO transferSaveDTO) {
         iTransactionService.transfer(transferSaveDTO.getAmount(), transferSaveDTO.getUserSender(), transferSaveDTO.getUserDestinatary());
-        return ResponseEntity.ok().body("Successful operation.");
+        ApiResponse response = new ApiResponse("Successful operation.");
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/{userID}")

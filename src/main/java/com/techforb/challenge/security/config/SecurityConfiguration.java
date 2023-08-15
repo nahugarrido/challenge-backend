@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,17 +23,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((auth ->
+        http.csrf(AbstractHttpConfigurer::disable).cors(Customizer.withDefaults()).authorizeHttpRequests((auth ->
                         auth.requestMatchers("/api/v1/auth/**",
                                         "/doc/swagger-ui/**",
                                         "/swagger-ui.html",
                                         "/v3/api-docs/**",
-                                        "/v3/api-docs.yaml",
-                                        "/api/v1/user/**",
-                                        "/api/v1/admin/**",
-                                        "/api/v1/loans/**",
-                                        "/api/v1/transactions/**",
-                                        "/api/v1/cards/**")
+                                        "/v3/api-docs.yaml")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
