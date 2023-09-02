@@ -2,6 +2,7 @@ package com.techforb.challenge.entity;
 
 import com.techforb.challenge.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,31 +25,40 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
+    @NotNull
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name")
+    @NotNull
+    @Column(name = "first_name", nullable = false)
     private String firstname;
 
-    @Column(name = "last_name")
+    @NotNull
+    @Column(name = "last_name", nullable = false)
     private String lastname;
 
-    @Column(name = "email")
+    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @NotNull
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "picture")
+    @NotNull
+    @Column(name = "picture", nullable = false)
     private String picture;
 
-    @Column(name = "balance")
+    @NotNull
+    @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
-    @Column(name = "user_id")
+    @NotNull
+    @Column(name = "user_id", nullable = false)
     private String userID;
 
-    @Column(name = "role")
+    @NotNull
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 

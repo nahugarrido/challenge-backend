@@ -3,6 +3,7 @@ package com.techforb.challenge.entity;
 import com.techforb.challenge.enums.TransactionStatus;
 import com.techforb.challenge.enums.TransactionType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -20,23 +21,28 @@ import java.time.LocalDateTime;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
-    @Column(name = "amount")
+    @NotNull
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "date")
+    @NotNull
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "status")
+    @NotNull
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
-    @Column(name = "type")
+    @NotNull
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

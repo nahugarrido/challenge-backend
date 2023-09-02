@@ -5,6 +5,7 @@ import com.techforb.challenge.dto.InstallmentDTO;
 import com.techforb.challenge.dto.LoanSaveDTO;
 import com.techforb.challenge.service.ILoanService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class LoanController {
         this.iLoanService = iLoanService;
     }
     @PostMapping(value = "/generate")
-    public ResponseEntity<ApiResponse> generateLoan(@RequestBody LoanSaveDTO loanSaveDTO) {
+    public ResponseEntity<ApiResponse> generateLoan(@Valid @RequestBody LoanSaveDTO loanSaveDTO) {
         iLoanService.generateLoan(loanSaveDTO);
         ApiResponse response = new ApiResponse("Successful operation.");
         return ResponseEntity.ok().body(response);

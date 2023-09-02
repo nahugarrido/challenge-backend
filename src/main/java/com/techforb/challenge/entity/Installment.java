@@ -1,8 +1,8 @@
 package com.techforb.challenge.entity;
 
 import com.techforb.challenge.enums.InstallmentStatus;
-import com.techforb.challenge.enums.TransactionStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,26 +19,32 @@ public class Installment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
-    @Column(name = "due_date")
+    @NotNull
+    @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
-    @Column(name = "issue_date")
+    @NotNull
+    @Column(name = "issue_date", nullable = false)
     private LocalDate issueDate;
 
-    @Column(name = "amount")
+    @NotNull
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "number")
+    @NotNull
+    @Column(name = "number", nullable = false)
     private int number;
 
-    @Column(name = "status")
+    @NotNull
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private InstallmentStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "loan_id")
+    @JoinColumn(name = "loan_id", nullable = false)
     private Loan loan;
 
     @OneToOne(mappedBy = "installment")
